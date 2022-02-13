@@ -1,0 +1,16 @@
+name: RangedCommands
+version: 1.0
+author: StivenFocs
+main: cloud.stivenfocs.RangedCommands.Loader
+api-version: 1.17
+commands:
+    rangedcommands:
+        aliases: [rcommands,rcmds]
+        description: "Main command of the plugin"
+permissions:
+    rangedcommands.admin:
+        default: op
+        description: "Allows the user to use the plugin's commands"
+    rangedcommands.except:
+        default: op
+        description: "Allows an user to except a command limit"
