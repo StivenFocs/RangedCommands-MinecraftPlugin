@@ -27,28 +27,27 @@ public class Events implements Listener {
             for (String configuration_command : Vars.getVars().dataConfig.getKeys(false)) {
                 GenerateCommandData command = new GenerateCommandData(configuration_command);
 
+                boolean Continue = false;
                 if (command.justThisCommand()) {
-                    if (!command_name.equalsIgnoreCase(configuration_command.toLowerCase())) {
-                        return;
-                    }
+                    if (command_name.equalsIgnoreCase(configuration_command.toLowerCase())) Continue = true;
                 } else {
-                    if (!command_name.toLowerCase().startsWith(configuration_command.toLowerCase())) {
-                        return;
-                    }
+                    if (command_name.toLowerCase().startsWith(configuration_command.toLowerCase())) Continue = true;
                 }
 
-                for (Entity entity : Bukkit.getWorld(p.getLocation().getWorld().getName()).getNearbyEntities(command.getLocation(), command.getMinRange(), command.getMinRange(), command.getMinRange())) {
-                    if (entity instanceof Player) {
-                        Player p_ = (Player) entity;
+                if (Continue) {
+                    for (Entity entity : Bukkit.getWorld(p.getLocation().getWorld().getName()).getNearbyEntities(command.getLocation(), command.getMinRange(), command.getMinRange(), command.getMinRange())) {
+                        if (entity instanceof Player) {
+                            Player p_ = (Player) entity;
 
-                        if (p_.getUniqueId().equals(p.getUniqueId())) {
-                            return;
+                            if (p_.getUniqueId().equals(p.getUniqueId())) {
+                                return;
+                            }
                         }
                     }
-                }
 
-                event.setCancelled(true);
-                Vars.sendString(command.getDenyMessage(), p);
+                    event.setCancelled(true);
+                    Vars.sendString(command.getDenyMessage(), p);
+                }
             }
         }
     }
